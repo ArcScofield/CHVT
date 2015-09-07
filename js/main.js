@@ -1,4 +1,4 @@
-define([
+ï»¿define([
     "dojo/ready", "dojo/json", "dojo/_base/array",
     "dojo/_base/array", "dojo/_base/Color",
     "dojo/_base/declare", "dojo/_base/lang",
@@ -57,21 +57,21 @@ define([
         editor: null,
         editableLayers: null,
         timeFormats: ["shortDateShortTime", "shortDateLEShortTime", "shortDateShortTime24", "shortDateLEShortTime24", "shortDateLongTime", "shortDateLELongTime", "shortDateLongTime24", "shortDateLELongTime24"],
-        clusterLayerTown: {},//clusterÍ¼²ã£¨Êı¾İ¶ÁÈ¡×ÔAccessÊı¾İ¿â£©
+        clusterLayerTown: {},//clusterå›¾å±‚ï¼ˆæ•°æ®è¯»å–è‡ªAccessæ•°æ®åº“ï¼‰
 
-        //Æô¶¯º¯Êı
-        //TODO:ÓÅ»¯½á¹¹
+        //å¯åŠ¨å‡½æ•°
+        //TODO:ä¼˜åŒ–ç»“æ„
         startup: function (defaultConfig) {
             if (defaultConfig) {
                 this.config = defaultConfig;
 
-                // document ready£¬»ñÈ¡initExt
+                // document readyï¼Œè·å–initExt
                 ready(lang.hitch(this, function () {
 
-                    //´´½¨map¶ÔÏó
+                    //åˆ›å»ºmapå¯¹è±¡
                     this._createMap();
 
-                    //´´½¨map×é¼ş
+                    //åˆ›å»ºmapç»„ä»¶
                     this._createUI();
 
                     // make sure map is loaded
@@ -94,15 +94,15 @@ define([
         },
 
         _createMap: function () {
-            var options = {};//µØÍ¼ÊôĞÔÑ¡Ïî
+            var options = {};//åœ°å›¾å±æ€§é€‰é¡¹
 
-            //ÉèÖÃµØÍ¼³õÊ¼»¯²ÎÊı
+            //è®¾ç½®åœ°å›¾åˆå§‹åŒ–å‚æ•°
             this._setMapOptions(options);
 
-            //´´½¨µØÍ¼
+            //åˆ›å»ºåœ°å›¾
             this.map = new Map("map-pane", options);
 
-            //Ìí¼ÓÍ¼²ãµ½µØÍ¼
+            //æ·»åŠ å›¾å±‚åˆ°åœ°å›¾
             this._addLayersToMap(
                 this.map,
                 this.config,
@@ -112,7 +112,7 @@ define([
             this._addOperationLayer();
         },
 
-        //Ìí¼ÓÍ¼²ãµ½µØÍ¼
+        //æ·»åŠ å›¾å±‚åˆ°åœ°å›¾
         _addLayersToMap: function (map, config, ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer) {
             if (map !== null) {
                 var baseMapServiceLayer = null,
@@ -133,22 +133,22 @@ define([
             }
         },
 
-        //ÉèÖÃµØÍ¼³õÊ¼»¯²ÎÊı
+        //è®¾ç½®åœ°å›¾åˆå§‹åŒ–å‚æ•°
         _setMapOptions: function (options) {
 
-            //ÉùÃ÷mapµÄ×Ô¶¨ÒåinfoWindow¶ÔÏó£¬ÓÃÓÚÏÔÊ¾µãÍ¼²ãµÄ²éÑ¯Ä£°å
+            //å£°æ˜mapçš„è‡ªå®šä¹‰infoWindowå¯¹è±¡ï¼Œç”¨äºæ˜¾ç¤ºç‚¹å›¾å±‚çš„æŸ¥è¯¢æ¨¡æ¿
             var infoWindow = new InfoWindow({
                 domNode: domConstruct.create("div", null, dom.byId("map-pane"))
             });
 
             options.infoWindow = infoWindow;
 
-            //ÉèÖÃµØÍ¼ÊôĞÔ,²¢´´½¨µØÍ¼
-            //µØÍ¼·Å´ó¼¶±ğ
+            //è®¾ç½®åœ°å›¾å±æ€§,å¹¶åˆ›å»ºåœ°å›¾
+            //åœ°å›¾æ”¾å¤§çº§åˆ«
             if (this.config.zoom) {
                 options.zoom = this.config.zoom;
             }
-            //µØÍ¼ÖĞĞÄ
+            //åœ°å›¾ä¸­å¿ƒ
             if (this.config.center) {
                 options.center = this.config.center;
             }
@@ -160,23 +160,23 @@ define([
             return options;
         },
 
-        //Ìí¼ÓÒµÎñÍ¼²ã£¨¹Å´å¹ÅÕòµãÍ¼²ã£©
+        //æ·»åŠ ä¸šåŠ¡å›¾å±‚ï¼ˆå¤æ‘å¤é•‡ç‚¹å›¾å±‚ï¼‰
         _addOperationLayer: function () {
 
-            //µ÷ÓÃhandel/getData.ashx£¬¶ÁÈ¡accessÊı¾İ¿â£¬»ñÈ¡µãÊı¾İµÄJSON¼¯ºÏ
+            //è°ƒç”¨handel/getData.ashxï¼Œè¯»å–accessæ•°æ®åº“ï¼Œè·å–ç‚¹æ•°æ®çš„JSONé›†åˆ
             var deferredResult = dojo.xhrPost({
                 url: "handel/getData.ashx",
-                timeout: 3000, //Dojo»á±£Ö¤³¬Ê±Éè¶¨µÄÓĞĞ§ĞÔ
-                handleAs: "json" //µÃµ½µÄresponse½«±»ÈÏÎªÊÇJSON£¬²¢×Ô¶¯×ªÎªobject
+                timeout: 3000, //Dojoä¼šä¿è¯è¶…æ—¶è®¾å®šçš„æœ‰æ•ˆæ€§
+                handleAs: "json" //å¾—åˆ°çš„responseå°†è¢«è®¤ä¸ºæ˜¯JSONï¼Œå¹¶è‡ªåŠ¨è½¬ä¸ºobject
             }).then(lang.hitch(this,
                 this._addClusters),
             lang.hitch(this, function () {
                 this.reportError();
             })
-           ); //µ±ÏìÓ¦½á¹û¿ÉÓÃÊ±ÔÙµ÷ÓÃ»Øµ÷º¯Êı
+           ); //å½“å“åº”ç»“æœå¯ç”¨æ—¶å†è°ƒç”¨å›è°ƒå‡½æ•°
         },
 
-        //Ìí¼ÓÍ¼²ãCluster
+        //æ·»åŠ å›¾å±‚Cluster
         _addClusters: function (resp) {
 
             var wgs = new SpatialReference({
@@ -192,6 +192,7 @@ define([
                     "fullName": p.fullName,
                     "order": p.order,
                     "province": p.province,
+                    "city": p.city,
                     "county": p.county,
                     "town": p.town,
                     "rsImage": p.rsImage,
@@ -218,7 +219,7 @@ define([
             this.clusterLayerTown = new ClusterLayer({
                 "data": dataArray,
                 "distance": 100,
-                "id": "ÀúÊ·ÎÄ»¯Ãû´åÃûÕò",
+                "id": "æ¹–å—çœå†å²åæ‘åé•‡",
                 "labelColor": "#fff",
                 "labelOffset": 10,
                 "zoomOnClick": true,
@@ -228,7 +229,7 @@ define([
                 "singleTemplate": infoTemplate
             });
 
-            //clusterLayerTownÌí¼Ó·Ö¼¶äÖÈ¾
+            //clusterLayerTownæ·»åŠ åˆ†çº§æ¸²æŸ“
             var defaultSym = new SimpleMarkerSymbol().setSize(4);
             var renderer1 = new ClassBreaksRenderer(defaultSym, "clusterCount");
             var picBaseUrl = "images/";
@@ -254,11 +255,11 @@ define([
                 }
             });
 
-            //³õÊ¼»¯µç×Ó»­²áÃæ°å
+            //åˆå§‹åŒ–ç”µå­ç”»å†Œé¢æ¿
             //creatList(data1);
         },
 
-        //Çå³ıinfoWindow£¬clusterLayer
+        //æ¸…é™¤infoWindowï¼ŒclusterLayer
         _cleanUp: function () {
             if (this.map) {
                 this.map.infoWindow.hide();
@@ -269,7 +270,7 @@ define([
         },
 
 
-        // Create UI£¬add map tools
+        // Create UIï¼Œadd map tools
         _createUI: function () {
             var layerList = null,
                   legend = null,
@@ -283,7 +284,7 @@ define([
             //Add tools to the toolbar. The tools are listed in the defaults.js file
 
             //add LayerList widget
-            //TODO:ÇĞ»»µ×Í¼ºó£¬¸üĞÂÍ¼²ãÁĞ±í£»
+            //TODO:åˆ‡æ¢åº•å›¾åï¼Œæ›´æ–°å›¾å±‚åˆ—è¡¨ï¼›
             layerList = new LayerList({
                 map: this.map,
             }, "layer-list");
@@ -292,7 +293,7 @@ define([
             //add legend widget
             legend = new Legend({
                 map: this.map,
-                //layerInfos: [{ layer: baseLayer, title: "µ×Í¼" }],
+                //layerInfos: [{ layer: baseLayer, title: "åº•å›¾" }],
                 arrangement: esri.dijit.Legend.ALIGN_LEFT
             }, "legend");
             legend.startup();
@@ -348,20 +349,20 @@ define([
             });
 
             //add  printer widget
-            //todo:´òÓ¡Ô¤ÀÀ¹¦ÄÜ¡¢µ¼³öpdf¡¢jpgµÈ
+            //todo:æ‰“å°é¢„è§ˆåŠŸèƒ½ã€å¯¼å‡ºpdfã€jpgç­‰
             printer = new Print({
                 map: this.map,
                 url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
             }, dom.byId("print"));
             printer.startup();
 
-            //TODO:ÎŞ·¨ÏÔÊ¾ÊéÇ©×é¼ş
+            //TODO:æ— æ³•æ˜¾ç¤ºä¹¦ç­¾ç»„ä»¶
             var bookmarks = new Bookmarks({
                 map: this.map
             }, domConstruct.create("div", {}, "bookmarks"));
 
 
-            //Á¿²â
+            //é‡æµ‹
             var measure = new Measurement({
                 map: this.map
                 //defaultAreaUnit: areaUnit,
@@ -377,18 +378,18 @@ define([
             toggle.startup();
         },
 
-        // map¼ÓÔØÍê±Ï£¬È¥³ıloadingÌõ
+        // mapåŠ è½½å®Œæ¯•ï¼Œå»é™¤loadingæ¡
         _mapLoaded: function () {
 
             // remove loading class from body
             domClass.remove(document.body, "app-loading");
 
-            //window¶ÔÏó×¢²áorientationchange
+            //windowå¯¹è±¡æ³¨å†Œorientationchange
             on(window, "orientationchange", lang.hitch(this, this._adjustPopupSize));
             this._adjustPopupSize();
         },
 
-        //×Ô¶¯µ÷Õûmap´óĞ¡
+        //è‡ªåŠ¨è°ƒæ•´mapå¤§å°
         _adjustPopupSize: function () {
             if (!this.map) {
                 return;
@@ -424,13 +425,13 @@ define([
                 if (this.config && this.config.i18n) {
                     node.innerHTML = this.config.i18n.map.error + ": " + error.message;
                 } else {
-                    node.innerHTML = "ÎŞ·¨´´½¨µØÍ¼£¬Ô­ÒòÊÇ£º " + error.message;
+                    node.innerHTML = "æ— æ³•åˆ›å»ºåœ°å›¾ï¼ŒåŸå› æ˜¯ï¼š " + error.message;
                 }
             }
         },
 
         _setInitialExtent: function () {
-            //ÉèÖÃµØÍ¼extent
+            //è®¾ç½®åœ°å›¾extent
             if (this.config.extent) {
                 var extArray = decodeURIComponent(this.config.extent).split(",");
                 if (extArray.length === 4) {
@@ -1063,7 +1064,7 @@ define([
             }
 
 
-            //application/has-config!scalebar? £¬Èç¹ûÎªfalse£¬²»×öÈÎºÎ´¦Àí
+            //application/has-config!scalebar? ï¼Œå¦‚æœä¸ºfalseï¼Œä¸åšä»»ä½•å¤„ç†
             //hitch() returns a function that will execute a given function in a given context
             require(["application/has-config!scalebar?esri/dijit/Scalebar"], lang.hitch(this, function (Scalebar) {
                 if (!Scalebar) {

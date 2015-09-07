@@ -1,5 +1,4 @@
-﻿
-define([
+﻿define([
     "dojo/Evented",
     "dojo/parser",
     "dojo/on",
@@ -34,10 +33,12 @@ function (
     return declare([InfoWindowBase, Evented], {
 
         isContentShowing: false,
+
         initMapCenter: null,
         initScreenCenter: null,
         showMapPoint: null,
         showScreenPoint: null,
+
         constructor: function (parameters) {
             lang.mixin(this, parameters);
             domClass.add(this.domNode, "myInfoWindow");
@@ -88,13 +89,16 @@ function (
             }));
 
         },
+
         setTitle: function (title) {
             this.place(title, this._title);
-
         },
+
         setContent: function (content) {
             this.place(content, this._content);
         },
+
+        //注意参数，应该提取出来
         _showInfoWindow: function (x, y) {
             //Position 10x10 pixels away from the specified location
             domStyle.set(this.domNode, {
@@ -107,6 +111,7 @@ function (
 
         //设置InfoWindow的内容
         _setFeature: function (graphic) {
+
             //获取信息
             var Imgsrc = graphic.attributes.image.replace('"', "");
             var name = graphic.attributes.sName.replace('"', "");
@@ -114,9 +119,11 @@ function (
             var order = graphic.attributes.order.replace('"', "");
             var province = graphic.attributes.province.replace('"', "");
             var summary = graphic.attributes.summary.replace('"', "");
+
             //信息内容框
             var infoDiv = document.createElement("DIV");
             infoDiv.setAttribute("class", "infoDiv");
+
             //基本信息（照片简介）
             var infoContent = document.createElement("DIV");
             infoContent.setAttribute("class", "infoContent");
@@ -127,6 +134,7 @@ function (
             infoImg.src = src;
             infoContent.appendChild(infoImg);
             infoContent.innerHTML += "<div style='float:left;margin-top:5px;margin-left:15px;width:120px;height:70px;line-height:22px'>" + "<b>批次：</b>" + order + "<br><b>省份：</b>" + province + "<br><b>详情：</div>";
+
             //功能按钮
             var infoMenu = document.createElement("ul");
             infoMenu.setAttribute("class", "infoMenu");
@@ -145,7 +153,6 @@ function (
 
             //从这里出发
             var infoItem2 = document.createElement("li");
-
             infoItem2.setAttribute("id", "infoItem2");
             infoItem2.addEventListener("click", function () {
                 switchTab2(2);
@@ -157,7 +164,6 @@ function (
 
             //在附近查找
             var infoItem3 = document.createElement("li");
-
             infoItem3.setAttribute("id", "infoItem3");
             infoItem3.addEventListener("click", function () {
                 switchTab2(3);
@@ -223,6 +229,7 @@ function (
 
             this.setContent(infoDiv);
         },
+
         show: function (location) {
             showMapPoint = location;
             initMapCenter = this.map.extent.getCenter();
@@ -247,11 +254,13 @@ function (
             this.isShowing = true;
             this.onShow();
         },
+
         hide: function () {
             domUtils.hide(this.domNode);
             this.isShowing = false;
             this.onHide();
         },
+
         resize: function (width, height) {
             domStyle.set(this.domNode, {
                 "width": width + "px",
@@ -261,6 +270,7 @@ function (
             //            "width": width + "px"
             //          });
         },
+
         destroy: function () {
             domConstruct.destroy(this.domNode);
             this._closeButton = this._title = this._content = null;

@@ -65,7 +65,7 @@ public class getData : IHttpHandler
             }
 
             System.Data.OleDb.OleDbCommand oleCmd = oleConnection.CreateCommand();
-            oleCmd.CommandText = @"SELECT ID, sName, fullName, order, province, county, town, x, y, rsImage, video, image, summary, doc, officialSite  FROM TownVillage";
+            oleCmd.CommandText = @"SELECT ID, sName, fullName, order, province, city,county, town, x, y, rsImage, video, image, summary, doc, officialSite  FROM TownVillage";
             oleDataReader = oleCmd.ExecuteReader();
             dt.Load(oleDataReader);
         }

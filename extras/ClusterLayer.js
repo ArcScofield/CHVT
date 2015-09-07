@@ -15,6 +15,7 @@ define([
   SpatialReference, Point, Graphic, SimpleMarkerSymbol, TextSymbol,
   PopupTemplate, GraphicsLayer
 ) {
+
     return declare([GraphicsLayer], {
         constructor: function (options) {
             // options:
@@ -162,8 +163,15 @@ define([
             }
             else {
                 e.stopPropagation();
-                this._map.infoWindow.setTitle(e.graphic.attributes.sName);
+
+                //TODO:分离到外部
+                this._map.infoWindow.setTitle(
+                    e.graphic.attributes.sName+" ("+
+                    e.graphic.attributes.province +
+                    e.graphic.attributes.city + ")"
+                    );
                 this._map.infoWindow._setFeature(e.graphic);
+
                 this._map.infoWindow.show(e.graphic.geometry);
             }
         },
