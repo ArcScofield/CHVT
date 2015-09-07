@@ -182,7 +182,7 @@ define([
             var wgs = new SpatialReference({
                 "wkid": 4326
             }),
-                dataArray = [];
+                 dataArray = [];
 
             arrayUtils.map(resp, function (p) {
                 var latlng = new Point(parseFloat(p.x), parseFloat(p.y), wgs);
@@ -207,19 +207,22 @@ define([
                     "y": webMercator.y,
                     "attributes": attributes
                 };
+
                 dataArray.push(item);
-                //FIXME:分批次过滤？
             });
 
-            var infoTemplate= new InfoTemplate("${sName}", "${*}");
+            var infoTemplate = new InfoTemplate("${sName}(${province}${city})", "${*}");
 
             var data = dataArray.concat();
+
             this.clusterLayerTown = new ClusterLayer({
                 "data": dataArray,
                 "distance": 100,
-                "id": "clusters1",
+                "id": "历史文化名村名镇",
                 "labelColor": "#fff",
                 "labelOffset": 10,
+                "zoomOnClick": true,
+                "showSingles": true,
                 //"resolution": this.map.extent.getWidth() / this.map.width,
                 "singleColor": "#333",
                 "singleTemplate": infoTemplate
@@ -232,9 +235,11 @@ define([
             var blue = new PictureMarkerSymbol(picBaseUrl + "red.png", 28, 28).setOffset(0, 8);
             var green = new PictureMarkerSymbol(picBaseUrl + "marker4.png", 38, 38).setOffset(0, 8);
             var red = new PictureMarkerSymbol(picBaseUrl + "marker4.png", 64, 64).setOffset(0, 8);
+
             renderer1.addBreak(0, 1, green);
             renderer1.addBreak(1, 30, green);
             renderer1.addBreak(30, 200, red);
+
             this.clusterLayerTown.setRenderer(renderer1);
 
             this.map.addLayer(this.clusterLayerTown);

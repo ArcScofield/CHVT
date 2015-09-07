@@ -104,6 +104,8 @@ function (
             //display the info window
             domUtils.show(this.domNode);
         },
+
+        //设置InfoWindow的内容
         _setFeature: function (graphic) {
             //获取信息
             var Imgsrc = graphic.attributes.image.replace('"', "");
@@ -218,6 +220,7 @@ function (
             infoDiv.appendChild(infoContent);
             infoDiv.appendChild(infoMenu);
             infoDiv.appendChild(infoPane);
+
             this.setContent(infoDiv);
         },
         show: function (location) {

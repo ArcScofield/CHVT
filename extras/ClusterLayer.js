@@ -8,7 +8,6 @@ define([
   "esri/graphic",
   "esri/symbols/SimpleMarkerSymbol",
   "esri/symbols/TextSymbol",
-
   "esri/dijit/PopupTemplate",
   "esri/layers/GraphicsLayer"
 ], function (
